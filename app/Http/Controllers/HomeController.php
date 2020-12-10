@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Grade;
+use App\Meeting;
 use App\Parents;
 use App\Student;
+use App\Subject;
 use App\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -32,7 +35,7 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        
+
         if ($user->hasRole('Admin')) {
 
             $parents = Parents::latest()->get();
@@ -45,40 +48,62 @@ class HomeController extends Controller
 
             $teacher = Teacher::with(['user','subjects','classes','students'])->withCount('subjects','classes')->findOrFail($user->teacher->id);
 
-            return view('home', compact('teacher'));
+            //$subjects = Subject::with(['meeting'])->where('teacher_id', '=', $user->teacher->id)->where('endDateTime', '<=', Carbon::now())->get();
+            $subjectmeeting = Subject::with(['meeting' => function ($query) {
+                    $query->where('endDateTime', '>=', Carbon::now());
+                }])
+                ->where('teacher_id', '=', $user->teacher->id)
+                ->withCount(['meeting' => function ($query) {
+                    $query->where('endDateTime', '>=', Carbon::now());
+                }])->get();
+
+
+            //$meeting = Meeting::where('endDateTime', '<=', Carbon::now())->whereIn('id', $subjects)->get();
+
+            return view('home', compact('teacher','subjectmeeting'));
 
         } elseif ($user->hasRole('Parent')) {
-            
-            $parents = Parents::with(['children'])->withCount('children')->findOrFail($user->parent->id); 
+
+            $parents = Parents::with(['children'])->withCount('children')->findOrFail($user->parent->id);
 
             return view('home', compact('parents'));
 
         } elseif ($user->hasRole('Student')) {
-            
-            $student = Student::with(['user','parent','class','attendances'])->findOrFail($user->student->id); 
 
-            return view('home', compact('student'));
+            $student = Student::with(['user','parent','class','attendances'])->findOrFail($user->student->id);
+            $subj=array();
+            foreach ($student->class->subjects as $s){
+                array_push($subj, $s->id);
+            }
+            $subjectmeeting = Subject::with(['meeting' => function ($query) {
+                $query->where('endDateTime', '>=', Carbon::now());
+            }])
+                ->whereIn('id',  $subj)
+                ->withCount(['meeting' => function ($query) {
+                    $query->where('endDateTime', '>=', Carbon::now());
+                }])->get();
+            return view('home', compact('student','subjectmeeting'));
 
         } else {
             return 'NO ROLE ASSIGNED YET!';
         }
-        
+
     }
 
     /**
      * PROFILE
      */
-    public function profile() 
+    public function profile()
     {
         return view('profile.index');
     }
 
-    public function profileEdit() 
+    public function profileEdit()
     {
         return view('profile.edit');
     }
 
-    public function profileUpdate(Request $request) 
+    public function profileUpdate(Request $request)
     {
         $request->validate([
             'name'  => 'required|string|max:255',
@@ -107,12 +132,12 @@ class HomeController extends Controller
      * CHANGE PASSWORD
      */
     public function changePasswordForm()
-    {  
+    {
         return view('profile.changepassword');
     }
 
     public function changePassword(Request $request)
-    {     
+    {
         if (!(Hash::check($request->get('currentpassword'), Auth::user()->password))) {
             return back()->with([
                 'msg_currentpassword' => 'Your current password does not matches with the password you provided! Please try again.'

@@ -3,9 +3,34 @@
     background: #edf2f7 !important;
 }
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 .modal-bg {
     background-color: rgba(0, 0, 0, 0.4);
+}
+.labelaccordion{
+    cursor: pointer;
+}
+.labelaccordion:after {
+    content: '+';
+    position: absolute;
+    right: 1em;
+    color: #666;
+}
+
+.labelaccordion:checked + label:after {
+    content: '-';
+    line-height: .8em;
+}
+
+.accordion__content{
+    max-height: 0em;
+    transition: all 0.4s cubic-bezier(0.865, 0.14, 0.095, 0.87);
+}
+
+input[name='panel']:checked ~ .accordion__content {
+    /* Get this as close to what height you expect */
+    max-height: 50em;
 }

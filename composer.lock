@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df794f7209faa1890fcb7ba74682a9ac",
+    "content-hash": "1f1ae5150dfc11817c87c04d852f676f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -57,6 +57,62 @@
                 "stack"
             ],
             "time": "2020-05-31T07:17:05+00:00"
+        },
+        {
+            "name": "bigbluebutton/bigbluebutton-api-php",
+            "version": "2.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bigbluebutton/bigbluebutton-api-php.git",
+                "reference": "3256e88c0870ee201816ac80e193ba41eaccfd45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bigbluebutton/bigbluebutton-api-php/zipball/3256e88c0870ee201816ac80e193ba41eaccfd45",
+                "reference": "3256e88c0870ee201816ac80e193ba41eaccfd45",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-mbstring": "*",
+                "ext-simplexml": "*",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "composer/composer": "1.7.*@dev",
+                "ext-mbstring": "*",
+                "friendsofphp/php-cs-fixer": "2.*",
+                "fzaninotto/faker": "~1.8.0",
+                "php": ">=7.0",
+                "php-coveralls/php-coveralls": "2.1.*",
+                "phpunit/phpunit": "6.*",
+                "squizlabs/php_codesniffer": "3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BigBlueButton\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Ghazi Triki",
+                    "email": "ghazi.nocturne@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "BigBlueButton PHP API Library for PHP",
+            "homepage": "http://bigbluebutton.org/",
+            "keywords": [
+                "api",
+                "bbb",
+                "bigbluebutton"
+            ],
+            "time": "2020-08-20T13:19:38+00:00"
         },
         {
             "name": "brick/math",
@@ -511,6 +567,75 @@
                 "laravel"
             ],
             "time": "2020-05-31T07:30:16+00:00"
+        },
+        {
+            "name": "joisarjignesh/bigbluebutton",
+            "version": "v1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joisarjignesh/bigbluebutton.git",
+                "reference": "3b79439a6a3d7dc199c0b828b2372e9f6312e69e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joisarjignesh/bigbluebutton/zipball/3b79439a6a3d7dc199c0b828b2372e9f6312e69e",
+                "reference": "3b79439a6a3d7dc199c0b828b2372e9f6312e69e",
+                "shasum": ""
+            },
+            "require": {
+                "bigbluebutton/bigbluebutton-api-php": "^2.0",
+                "illuminate/support": "^5.5|^6.0|^7.0|^8.0",
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "JoisarJignesh\\Bigbluebutton\\BigbluebuttonServiceProvider"
+                    ],
+                    "aliases": {
+                        "Bigbluebutton": "JoisarJignesh\\Bigbluebutton\\Facades\\Bigbluebutton"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JoisarJignesh\\Bigbluebutton\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jignesh Joisar",
+                    "email": "jigneshjoisar@gmail.com",
+                    "homepage": "https://jigneshjoisar.web.app",
+                    "role": "Developer"
+                }
+            ],
+            "description": "BigBlueButton Server API Library for Laravel",
+            "homepage": "https://github.com/joisarjignesh/bigbluebutton",
+            "keywords": [
+                "api",
+                "bbb",
+                "bigbluebutton",
+                "joisarjignesh",
+                "laravel",
+                "laravel-package",
+                "meeting",
+                "package",
+                "php"
+            ],
+            "time": "2020-09-20T09:12:35+00:00"
         },
         {
             "name": "laravel/framework",
