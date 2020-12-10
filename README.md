@@ -1,4 +1,4 @@
-## Laravel School Management System (LSMS)
+## Laravel School Management System (LSMS) + bigbluebutton integration
 
 **LSM System** is a simple role based school management system.
 
